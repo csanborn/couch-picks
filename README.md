@@ -58,7 +58,7 @@ Unit tests cover the focus engine (all directions, row memory, edges, empty rows
 
 ## How this was built
 
-I built couch-picks by directing AI coding agents (Claude Code) from a written spec, [SPEC.md](SPEC.md), and reviewing the result. The spec came first: goals, non-goals and acceptance criteria. The agents wrote the code and tests against it.
+I built couch-picks by directing AI coding agents (Claude Code). The spec, [SPEC.md](SPEC.md), came first: goals, non-goals and acceptance criteria. The agents wrote the code and tests against it, and lint, typecheck, unit tests and a Playwright keyboard journey gate every change.
 
 ## License
 
