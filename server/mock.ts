@@ -13,7 +13,7 @@ interface Theme {
 const THEMES: readonly Theme[] = [
   {
     key: 'cozy',
-    keywords: ['cozy', 'cosy', 'rain', 'sunday', 'warm', 'blanket', 'chill', 'relax', 'comfort', 'tea'],
+    keywords: ['cozy', 'cosy', 'rain', 'sunday', 'warm', 'blanket', 'chill', 'relax', 'comfort'],
     rowTitle: 'Blanket and tea comfort',
     tags: ['Warm', 'Gentle', 'Feel good', 'Slow burn'],
     words: ['Lantern', 'Kettle', 'Harbor', 'Quilt', 'Orchard', 'Window', 'Bakery', 'Garden'],
@@ -25,7 +25,7 @@ const THEMES: readonly Theme[] = [
   },
   {
     key: 'family',
-    keywords: ['kid', 'kids', 'child', 'year old', 'family', 'son', 'daughter', 'little'],
+    keywords: ['kid', 'kids', 'child', 'year old', 'family', 'daughter', 'little'],
     rowTitle: 'Fun for the whole couch',
     tags: ['Family', 'Animated', 'Adventure', 'Silly'],
     words: ['Robot', 'Dragon', 'Treehouse', 'Comet', 'Pancake', 'Kite', 'Penguin', 'Rocket'],
@@ -172,7 +172,8 @@ function chooseKind(random: () => number): Pick['kind'] {
 
 function themesFor(mood: string, random: () => number): Theme[] {
   const text = mood.toLowerCase();
-  const matched = THEMES.filter((theme) => theme.keywords.some((word) => text.includes(word)));
+  // Keywords match at the start of a word, so "rain" also matches "rainy".
+  const matched = THEMES.filter((theme) => theme.keywords.some((word) => new RegExp(`\\b${word}`).test(text)));
   const rest = [...THEMES.filter((theme) => !matched.includes(theme)), ...FALLBACK_THEMES]
     .map((theme) => ({ theme, order: random() }))
     .sort((a, b) => a.order - b.order)
