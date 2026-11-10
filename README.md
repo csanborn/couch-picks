@@ -13,11 +13,12 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 and use the keyboard:
+Open http://localhost:5173 and use the keyboard, a mouse wheel or a trackpad:
 
 | Key | Does |
 | --- | --- |
 | Arrow keys | Move focus |
+| Mouse wheel or two-finger swipe | Move focus one card or row per step, like the arrows |
 | Enter | Search, pick a mood chip, open a pick |
 | Backspace or Escape | Close the detail view |
 
@@ -54,7 +55,7 @@ npm run build
 npm run test:e2e    # Playwright, Chromium, against the built app in demo mode
 ```
 
-Unit tests cover the focus engine (all directions, row memory, edges, empty rows, recovery), the focus store, the scroll math, the mock generator, schema parsing including malformed model output, and the endpoint handler with the SDK mocked. The Playwright journey types a mood, moves through rows, opens and closes details with Backspace and Escape, checks focus returns to the same card and fails on any console error. CI runs all of it on every push and pull request, with no secrets. `npm run screenshot` refreshes the image above.
+Unit tests cover the focus engine (all directions, row memory, edges, empty rows, recovery), the focus store, the scroll math, the wheel and trackpad step logic, the mock generator, schema parsing including malformed model output, and the endpoint handler with the SDK mocked. The Playwright journey types a mood, moves through rows, opens and closes details with Backspace and Escape, checks focus returns to the same card and fails on any console error. A second journey moves focus with the mouse wheel. CI runs all of it on every push and pull request, with no secrets. `npm run screenshot` refreshes the image above.
 
 ## How this was built
 

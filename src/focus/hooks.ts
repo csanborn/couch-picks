@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useSyncExternalStore
 import type { Direction } from './engine';
 import { layoutRect } from './measure';
 import { ROOT_SCOPE, type FocusStore } from './store';
+import { emptyWheelState, wheelStep } from './wheel';
 
 export const FocusContext = createContext<FocusStore | null>(null);
 
@@ -88,4 +89,28 @@ export function useRemoteKeys(store: FocusStore, onBack: () => void): void {
       window.removeEventListener('keydown', onKeyDown);
     };
   }, [store, onBack]);
+}
+
+/**
+ * Mouse wheel and two-finger trackpad scrolling move focus like the arrows.
+ * The default is blocked so a sideways swipe never triggers browser back.
+ * Ctrl+wheel (pinch zoom) is left alone.
+ */
+export function useWheelNavigation(store: FocusStore): void {
+  useEffect(() => {
+    let state = emptyWheelState;
+    const onWheel = (event: WheelEvent) => {
+      if (event.ctrlKey) return;
+      event.preventDefault();
+      const step = wheelStep(state, event);
+      state = step.state;
+      if (!step.direction) return;
+      if (isTextField(document.activeElement) && (step.direction === 'left' || step.direction === 'right')) return;
+      store.move(step.direction);
+    };
+    window.addEventListener('wheel', onWheel, { passive: false });
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+    };
+  }, [store]);
 }

@@ -91,3 +91,29 @@ test('a preset chip searches without typing', async ({ page }) => {
   await expect(page.locator('section.row').first().locator('.card').first()).toBeFocused();
   expect(errors).toEqual([]);
 });
+
+test('a mouse wheel or two-finger swipe moves focus like the arrows', async ({ page }) => {
+  const errors = trackConsoleErrors(page);
+  await page.goto('/');
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('Enter');
+  const rows = page.locator('section.row');
+  const firstRowCards = rows.nth(0).locator('.card');
+  await expect(firstRowCards.first()).toBeFocused();
+
+  await page.mouse.move(600, 400);
+  // Moves are throttled, so leave a pause between gestures.
+  const swipe = async (deltaX: number, deltaY: number) => {
+    await page.mouse.wheel(deltaX, deltaY);
+    await page.waitForTimeout(300);
+  };
+  await swipe(100, 0);
+  await expect(firstRowCards.nth(1)).toBeFocused();
+  await swipe(0, 100);
+  await expect(page.locator('section.row').nth(1).locator('.card:focus')).toHaveCount(1);
+  await swipe(0, -100);
+  await expect(firstRowCards.nth(1)).toBeFocused();
+  await swipe(-100, 0);
+  await expect(firstRowCards.first()).toBeFocused();
+  expect(errors).toEqual([]);
+});

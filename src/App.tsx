@@ -6,7 +6,7 @@ import { DETAIL_SCOPE, DetailOverlay } from './components/DetailOverlay';
 import { MoodPrompt } from './components/MoodPrompt';
 import { PickRow } from './components/PickRow';
 import { Stage } from './components/Stage';
-import { FocusContext, useFocusedRow, useRemoteKeys } from './focus/hooks';
+import { FocusContext, useFocusedRow, useRemoteKeys, useWheelNavigation } from './focus/hooks';
 import { FocusStore } from './focus/store';
 import { HEADER_HEIGHT, ROW_STRIDE } from './layout';
 
@@ -92,6 +92,7 @@ export function App() {
   }, [store, detail]);
 
   useRemoteKeys(store, closeDetail);
+  useWheelNavigation(store);
 
   const rows = results.status === 'ready' ? results.data.rows : NO_ROWS;
   const demo = results.status === 'ready' && results.data.source === 'demo';

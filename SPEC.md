@@ -16,7 +16,7 @@ A 10-foot, remote-driven web app that turns a mood ("cozy rainy Sunday") into ro
 
 - Real catalog data, posters, playback, accounts or persistence.
 - Imitating any real streaming service's name, branding, layout or titles.
-- Pointer-first or touch-first design (pointer clicks work, but the remote is the primary input).
+- Pointer-first or touch-first design (pointer clicks work and the mouse wheel or a trackpad swipe moves focus like the arrows, but the remote is the primary input).
 - A production server. The endpoint runs as Vite middleware in dev and preview.
 
 ## Focus engine rules
