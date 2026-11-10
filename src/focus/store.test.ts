@@ -3,7 +3,7 @@ import { FocusStore, type FocusTarget } from './store';
 
 function target(x: number, y: number, width = 100, height = 60) {
   const focus = vi.fn<FocusTarget['focus']>();
-  return { getBoundingClientRect: () => ({ x, y, width, height }), focus };
+  return { rect: () => ({ x, y, width, height }), focus };
 }
 
 const flushMicrotasks = () => Promise.resolve();

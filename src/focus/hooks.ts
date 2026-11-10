@@ -1,10 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useSyncExternalStore } from 'react';
 import type { Direction } from './engine';
+import { layoutRect } from './measure';
 import { ROOT_SCOPE, type FocusStore } from './store';
 
 export const FocusContext = createContext<FocusStore | null>(null);
 
-export function useFocusStore(): FocusStore {
+function useFocusStore(): FocusStore {
   const store = useContext(FocusContext);
   if (!store) throw new Error('useFocusStore needs a FocusContext provider');
   return store;
@@ -18,7 +19,19 @@ export function useFocusable(id: string, options: { row?: string; scope?: string
   const store = useFocusStore();
   const { row, scope = ROOT_SCOPE } = options;
   const ref = useCallback(
-    (element: HTMLElement | null) => (element ? store.register(id, element, { row, scope }) : undefined),
+    (element: HTMLElement | null) =>
+      element
+        ? store.register(
+            id,
+            {
+              rect: () => layoutRect(element),
+              focus: (focusOptions) => {
+                element.focus(focusOptions);
+              },
+            },
+            { row, scope },
+          )
+        : undefined,
     [store, id, row, scope],
   );
   const onFocus = useCallback(() => {

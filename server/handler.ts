@@ -8,7 +8,7 @@ export interface PicksConfig {
   model?: string | undefined;
 }
 
-export interface HandlerResult {
+interface HandlerResult {
   status: number;
   body: PicksResponse | { error: string };
 }

@@ -31,10 +31,10 @@ A 10-foot, remote-driven web app that turns a mood ("cozy rainy Sunday") into ro
 ## Performance and legibility
 
 - Rows scroll with `transform`, never `scrollLeft`. Focus changes do not interleave layout reads and writes.
-- Only the cards whose focus state changes re-render. Rows and cards are memoized.
+- A focus move re-renders no card (focus styling is CSS `:focus`). Only a row whose column changed re-renders, and its cards are memoized.
 - A high-contrast focus ring and a smooth scale, both on composited properties.
 - `prefers-reduced-motion` turns transitions off.
-- A 1920 by 1080 design canvas with title-safe padding, scaled to the window. Body text is at least 28 design pixels.
+- A 1920 by 1080 design canvas with title-safe padding, scaled to the window. Titles are at least 32 design pixels and no text is smaller than 24.
 
 ## Acceptance criteria
 

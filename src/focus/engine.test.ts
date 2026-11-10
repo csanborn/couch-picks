@@ -71,14 +71,22 @@ describe('findNearest', () => {
   it('weights drift across the axis more than distance along it', () => {
     const from = node('from', 0, 0, 100, 100);
     const far = node('far', 200, 0, 100, 100);
-    const nearButHigh = node('nearButHigh', 150, 60, 100, 100);
-    expect(findNearest(from, [from, far, nearButHigh], 'right')?.id).toBe('far');
+    const nearButLow = node('nearButLow', 150, 90, 100, 100);
+    expect(findNearest(from, [from, far, nearButLow], 'right')?.id).toBe('far');
   });
 
   it('treats overlapping rectangles (a scaled focused card) as zero gap', () => {
     const from = node('from', 0, 0, 112, 60);
     const next = node('next', 106, 0, 100, 60);
     expect(findNearest(from, [from, next], 'right')?.id).toBe('next');
+  });
+
+  it('prefers a closer row of chips over a wide field that is further away', () => {
+    // The field's center is closer to the card's center than any chip's is.
+    const input = node('input', 0, 0, 1400, 80);
+    const chips = [node('chip-0', 0, 120, 300, 60), node('chip-1', 320, 120, 300, 60), node('chip-2', 640, 120, 300, 60)];
+    const card = node('card', 480, 300, 400, 200);
+    expect(findNearest(card, [input, ...chips, card], 'up')?.id).toBe('chip-2');
   });
 
   it('chooses the chip under a wide text field by horizontal center', () => {

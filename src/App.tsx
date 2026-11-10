@@ -30,11 +30,14 @@ function StatusLine({ results }: { results: Exclude<Results, { status: 'ready' }
   );
 }
 
-/** Holds the header and rows, and slides them up so the focused row sits at the top. */
+/**
+ * Holds the header and rows. The first row fits under the prompt; deeper rows
+ * slide the column up so the focused row sits at the top.
+ */
 function Column({ children, rows }: { children: ReactNode; rows: readonly Row[] }) {
   const focusedRow = useFocusedRow();
   const rowIndex = rows.findIndex((row) => row.id === focusedRow);
-  const offsetY = rowIndex < 0 ? 0 : HEADER_HEIGHT + rowIndex * ROW_STRIDE;
+  const offsetY = rowIndex < 1 ? 0 : HEADER_HEIGHT + rowIndex * ROW_STRIDE;
   return (
     <div className="column" style={{ transform: `translate3d(0, ${String(-offsetY)}px, 0)` }}>
       {children}

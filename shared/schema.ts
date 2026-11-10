@@ -5,9 +5,8 @@ export const MOOD_MAX_LENGTH = 160;
 export const PicksRequestSchema = z.object({
   mood: z.string().trim().min(1, 'Tell us a mood first.').max(MOOD_MAX_LENGTH),
 });
-export type PicksRequest = z.infer<typeof PicksRequestSchema>;
 
-export const KINDS = ['Movie', 'Series', 'Special'] as const;
+const KINDS = ['Movie', 'Series', 'Special'] as const;
 
 /**
  * The shape we ask the model for. It stays loose on purpose (no length or count
@@ -32,7 +31,7 @@ export const ModelOutputSchema = z.object({
 });
 export type ModelOutput = z.infer<typeof ModelOutputSchema>;
 
-export const PickSchema = z.object({
+const PickSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1).max(60),
   year: z.number().int().min(1920).max(2035),
@@ -42,7 +41,7 @@ export const PickSchema = z.object({
 });
 export type Pick = z.infer<typeof PickSchema>;
 
-export const RowSchema = z.object({
+const RowSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1).max(48),
   picks: z.array(PickSchema).min(1).max(12),

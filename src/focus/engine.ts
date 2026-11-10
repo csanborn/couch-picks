@@ -43,10 +43,12 @@ function projectionsOverlap(a: Rect, b: Rect, horizontalTravel: boolean): boolea
     : a.x < b.x + b.width && b.x < a.x + a.width;
 }
 
-/** Edge gap along the direction of travel (0 when the rectangles overlap) plus weighted center drift. */
+/**
+ * Edge gap along the direction of travel (0 when the rectangles overlap) plus
+ * weighted drift: how far the candidate sits from the source's center line.
+ * A candidate that spans the center line has no drift, however wide it is.
+ */
 function score(from: Rect, to: Rect, direction: Direction): number {
-  const a = center(from);
-  const b = center(to);
   let gap: number;
   switch (direction) {
     case 'right':
@@ -62,7 +64,9 @@ function score(from: Rect, to: Rect, direction: Direction): number {
       gap = from.y - (to.y + to.height);
       break;
   }
-  const drift = isHorizontal(direction) ? Math.abs(b.y - a.y) : Math.abs(b.x - a.x);
+  const line = isHorizontal(direction) ? center(from).y : center(from).x;
+  const [start, end] = isHorizontal(direction) ? [to.y, to.y + to.height] : [to.x, to.x + to.width];
+  const drift = Math.max(0, start - line, line - end);
   return Math.max(0, gap) + CROSS_WEIGHT * drift;
 }
 

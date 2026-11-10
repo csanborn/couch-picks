@@ -9,8 +9,6 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
     plugins: [react(), picksApi({ apiKey: env.ANTHROPIC_API_KEY, model: env.ANTHROPIC_MODEL })],
-    server: { port: 5173 },
-    preview: { port: 4173 },
     test: {
       include: ['src/**/*.test.{ts,tsx}', 'server/**/*.test.ts', 'shared/**/*.test.ts'],
       environment: 'node',

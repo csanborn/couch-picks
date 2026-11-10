@@ -25,7 +25,11 @@ export const PickRow = memo(function PickRow({ row, onOpen }: PickRowProps) {
         {row.title}
       </h2>
       <div className="row-viewport">
-        <div className="row-track" style={{ transform: `translate3d(${String(-offset)}px, 0, 0)` }}>
+        <div
+          className="row-track"
+          data-track-offset={offset}
+          style={{ transform: `translate3d(${String(-offset)}px, 0, 0)` }}
+        >
           {row.picks.map((pick) => (
             <PickCard key={pick.id} pick={pick} rowId={row.id} onOpen={onOpen} />
           ))}

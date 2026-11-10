@@ -7,8 +7,8 @@ import type { TrackMetrics } from './focus/scroll';
  * measuring is needed to place a row or a card.
  */
 export const STAGE = { width: 1920, height: 1080 } as const;
-export const SAFE_X = 96;
-export const SAFE_Y = 54;
+const SAFE_X = 96;
+const SAFE_Y = 54;
 
 export const HEADER_HEIGHT = 380;
 export const ROW_STRIDE = 520;

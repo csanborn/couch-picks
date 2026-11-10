@@ -1,8 +1,8 @@
-import { emptyFocusState, focusNode, move, reconcile, type Direction, type FocusNode, type FocusState } from './engine';
+import { emptyFocusState, focusNode, move, reconcile, type Direction, type FocusNode, type FocusState, type Rect } from './engine';
 
-/** The parts of an element the store needs. HTMLElement satisfies it; tests use fakes. */
+/** What the store needs from a focusable element. */
 export interface FocusTarget {
-  getBoundingClientRect(): { x: number; y: number; width: number; height: number };
+  rect(): Rect;
   focus(options?: FocusOptions): void;
 }
 
@@ -114,8 +114,7 @@ export class FocusStore {
     const nodes: FocusNode[] = [];
     for (const [id, entry] of this.entries) {
       if (entry.scope !== scope) continue;
-      const { x, y, width, height } = entry.target.getBoundingClientRect();
-      nodes.push({ id, row: entry.row, rect: { x, y, width, height } });
+      nodes.push({ id, row: entry.row, rect: entry.target.rect() });
     }
     return nodes;
   }
