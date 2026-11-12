@@ -1,11 +1,11 @@
-# Render Blueprint: one free web service running the production build with
+# Render Blueprint: one always-on Starter web service running the production build with
 # `vite preview`, which also serves the /api/picks endpoint. No API key is set,
 # so the public deploy stays in demo mode and costs nothing to call.
 services:
   - type: web
     name: couch-picks
     runtime: node
-    plan: free
+    plan: starter
     # npm ci installs dev dependencies too: the preview server is Vite.
     buildCommand: npm ci && npm run build
     startCommand: npm start

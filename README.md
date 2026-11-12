@@ -24,7 +24,7 @@ Open http://localhost:5173 and use the keyboard, a mouse wheel or a trackpad:
 
 With no key the app runs in demo mode and shows a "Demo data" badge. To use Claude, copy `.env.example` to `.env` and set `ANTHROPIC_API_KEY`. `ANTHROPIC_MODEL` is optional and defaults to `claude-sonnet-5-5`.
 
-To host it, create a Blueprint on [Render](https://render.com) from this repo. `render.yaml` sets up one free web service in demo mode. Leave `ANTHROPIC_API_KEY` unset on a public deploy, or anyone can spend your API credits.
+To host it, create a Blueprint on [Render](https://render.com) from this repo. `render.yaml` sets up one always-on Starter web service ($7 a month) in demo mode. Leave `ANTHROPIC_API_KEY` unset on a public deploy, or anyone can spend your API credits.
 
 ## How the focus engine works
 
